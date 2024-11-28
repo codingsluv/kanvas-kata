@@ -27,6 +27,11 @@ Route::middleware('auth')->group(function () {
 
     // *** Routes BlogPost ***
     Route::get('/blog', [BlogPostController::class, 'index'])->name('blog.index');
+    Route::get('/blog/create', [BlogPostController::class, 'create'])->name('blog.create');
+    Route::post('/blog', [BlogPostController::class, 'store'])->name('blog.store');
+    Route::get('/blog/{blogPost}', [BlogPostController::class, 'show'])->name('blog.show');
+    Route::get('/blog/{blogPost}/edit', [BlogPostController::class, 'edit'])->name('blog.edit');
+    Route::get('/blog/{blogPost}/delete', [BlogPostController::class, 'destroy'])->name('blog.destroy');
 });
 
 require __DIR__.'/auth.php';

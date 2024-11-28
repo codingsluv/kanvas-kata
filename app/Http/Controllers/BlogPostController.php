@@ -13,4 +13,7 @@ class BlogPostController extends Controller
             'name' => $name,
         ]);
     }
+    public function create(){
+        return Inertia::render('Blog/Create');
+    }
 }

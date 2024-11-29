@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('like_posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('blog_post_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('blog_post_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->unique(['user_id', 'blog_post_id']); // Ensures uniqueness of user_id and blog_post_id combination.
         });

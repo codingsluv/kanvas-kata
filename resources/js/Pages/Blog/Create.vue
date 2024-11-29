@@ -2,6 +2,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { ref } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
+import { useForm } from '@inertiajs/vue3'
 
 import type { UploadProps, UploadUserFile } from 'element-plus'
 
@@ -21,6 +22,35 @@ const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
   dialogVisible.value = true
 }
 
+// form data with type anotation
+interface FormData {
+    title: string;
+    content: string;
+    image: File | null;
+}
+
+// initialize form data with corect type
+const form = useForm<FormData>({
+    title: '',
+    content: '',
+    image: null,
+})
+
+const handleFileChange = (file: UploadUserFile) => {
+    console.log(`this is file seleted ${file.raw}`)
+    if (file.status === 'ready') {
+        form.image = file.raw as File;
+    } else {
+        form.image = null;
+    }
+}
+
+
+// submit form
+const submit = () => {
+    form.post('/blog')
+}
+
 </script>
 
 <template>
@@ -29,24 +59,23 @@ const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
             <div class="container px-5 py-24 mx-auto">
                 <div class="flex flex-col text-center w-full mb-12">
                     <h1
-                        class="sm:text-3xl text-2xl font-medium title-font mb-4 text-white"
-                    >
+                        class="sm:text-3xl text-2xl font-medium title-font mb-4 text-white">
                         Tulis Sajak/Puisi
                     </h1>
                     <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
                         Apa yang ingin anda tuliskan?
                     </p>
                 </div>
-                <div class="lg:w-1/2 md:w-2/3 mx-auto">
+                <form @submit.prevent="submit">
+                    <div class="lg:w-1/2 md:w-2/3 mx-auto">
                     <div class="flex flex-wrap -m-2">
                         <div class="p-2 w-1/2">
                             <div class="relative">
                                 <label
                                     for="title"
-                                    class="leading-7 text-sm text-gray-600"
-                                    >Judul</label
-                                >
+                                    class="leading-7 text-sm text-gray-600">Judul</label>
                                 <input
+                                    v-model="form.title"
                                     type="text"
                                     id="title"
                                     name="title"
@@ -58,10 +87,9 @@ const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
                             <div class="relative">
                                 <label
                                     for="content"
-                                    class="leading-7 text-sm text-gray-600"
-                                    >Sajak/Puisi</label
-                                >
+                                    class="leading-7 text-sm text-gray-600">Sajak/Puisi</label>
                                 <textarea
+                                    v-model="form.content"
                                     id="content"
                                     name="content"
                                     class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
@@ -75,7 +103,7 @@ const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
                             list-type="picture-card"
                             :on-preview="handlePictureCardPreview"
                             :on-remove="handleRemove"
-                        >
+                            :on-change="handleFileChange">
                             <el-icon><Plus /></el-icon>
                         </el-upload>
 
@@ -167,6 +195,7 @@ const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
                         </div>
                     </div>
                 </div>
+                </form>
             </div>
         </section>
     </AuthenticatedLayout>

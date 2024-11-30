@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class BlogPostController extends Controller
 {
     public function index(){
-        $blogPosts = BlogPost::with('user')->latest()->paginate(6);
+        $blogPosts = BlogPost::with('user')->latest()->paginate(3);
         return Inertia::render('Blog/index', [
             'blogPosts' => $blogPosts,
         ]);
@@ -33,4 +35,17 @@ class BlogPostController extends Controller
         $blogPost->save();
         return redirect()->route('blog.index')->with('status', 'Blog post created successfully.');
     }
+
+    public function show(BlogPost $blogPost){
+        return Inertia::render('Blog/Show', [
+            'blogPost' => $blogPost,
+        ]);
+    }
+
+    public function edit(BlogPost $blogPost){
+        return Inertia::render('Blog/Edit', [
+            'blogPost' => $blogPost,
+        ]);
+    }
+
 }

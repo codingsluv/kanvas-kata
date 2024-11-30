@@ -82,7 +82,8 @@ defineProps<{ blogPosts: BlogPost }>();
                             <p class="leading-relaxed">
                                 {{ post.content }}
                             </p>
-                            <a
+                            <Link
+                                :href="`/blog/${post.id}`"
                                 class="text-indigo-500 inline-flex items-center mt-4"
                                 >View More
                                 <svg
@@ -97,7 +98,7 @@ defineProps<{ blogPosts: BlogPost }>();
                                     <path d="M5 12h14"></path>
                                     <path d="M12 5l7 7-7 7"></path>
                                 </svg>
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>

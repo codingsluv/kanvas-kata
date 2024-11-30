@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
+use Gemini\Laravel\Facades\Gemini;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -42,9 +43,16 @@ class BlogPostController extends Controller
         ]);
     }
 
-    public function edit(BlogPost $blogPost){
-        return Inertia::render('Blog/Edit', [
-            'blogPost' => $blogPost,
+    public function ai(Request $request){
+        $request->validate([
+            'prompt' => 'required|string|min:5',
+        ]);
+        $prompt = $request->input('prompt');
+        $result = Gemini::geminiPro()->generateContent($prompt);
+        $content = $result->text();
+
+        return Inertia::render('Blog/Create', [
+            'content' => $content,
         ]);
     }
 

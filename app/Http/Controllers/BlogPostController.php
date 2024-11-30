@@ -10,9 +10,9 @@ use Inertia\Inertia;
 class BlogPostController extends Controller
 {
     public function index(){
-        $name = "codingsluv";
+        $blogPosts = BlogPost::with('user')->latest()->paginate(6);
         return Inertia::render('Blog/index', [
-            'name' => $name,
+            'blogPosts' => $blogPosts,
         ]);
     }
     public function create(){

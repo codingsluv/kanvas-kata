@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import Favorites from "@/Components/Favorites.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { BlogPost } from '@/types/types';
 import { Link } from '@inertiajs/vue3';
@@ -74,7 +75,7 @@ const deletePost = () => {
 
 
 
-                        <Favorite :id="blogPost.id" ></Favorite>
+                        <Favorites :id="blogPost.id" ></Favorites>
                     </div>
                 </div>
                 <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">

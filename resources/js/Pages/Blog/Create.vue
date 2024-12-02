@@ -88,7 +88,7 @@ const generatePeom = () => {
         {
             method: 'post',
             data: { prompt: content.value },
-            onsuccess: page => {
+            onSuccess: page => {
                 ElMessage({
                     message: "Poem generated successfully",
                     type: 'success'

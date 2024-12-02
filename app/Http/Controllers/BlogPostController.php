@@ -56,4 +56,34 @@ class BlogPostController extends Controller
         ]);
     }
 
+    public function edit(BlogPost $blogPost){
+        return Inertia::render('Blog/Edit', [
+            'blogPost' => $blogPost,
+        ]);
+    }
+
+    public function update(Request $request, BlogPost $blogPost){
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'image' => 'image|mimes:jpg,jpeg,png,webp|max:2048'
+        ]);
+
+        $blogPost->update($request->only('title', 'content'));
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('images', 'public');
+            $blogPost->image = $path;
+        }
+        $blogPost->save();
+        return redirect()->route('blog.index')->with('status', 'Blog post updated successfully.');
+    }
+
+    public function destroy(BlogPost $blogPost){
+        $blogPost->delete();
+        if (Gate::denies('delete', $blogPost)) {
+            return redirect()->route('blog.index')->with('status', 'You are not authorized to delete this blog post.');
+        }
+    }
+
 }

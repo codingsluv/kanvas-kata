@@ -51,7 +51,7 @@ class User extends Authenticatable
         return $this->hasMany(BlogPost::class);
     }
 
-    public function likes(){
-        return $this->hasMany(LikePost::class);
+    public function favorites(){
+        return $this->hasMany(Favorite::class);
     }
 }

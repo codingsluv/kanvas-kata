@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { BlogPost } from '@/types/types';
-import Pagination from '@/Components/Pagination.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import moment from 'moment/moment';
 import { Link } from '@inertiajs/vue3';
@@ -43,8 +42,6 @@ defineProps<{
                 </div>
             </div>
         </section>
-
-        <Pagination :links="Favorites.links" ></Pagination>
 
     </AuthenticatedLayout>
 </template>

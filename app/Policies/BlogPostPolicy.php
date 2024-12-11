@@ -13,7 +13,7 @@ class BlogPostPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class BlogPostPolicy
      */
     public function view(User $user, BlogPost $blogPost): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class BlogPostPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -37,7 +37,8 @@ class BlogPostPolicy
      */
     public function update(User $user, BlogPost $blogPost): bool
     {
-        return false;
+        return $user->id == $blogPost->user_id;
+
     }
 
     /**
@@ -45,7 +46,7 @@ class BlogPostPolicy
      */
     public function delete(User $user, BlogPost $blogPost): bool
     {
-        return false;
+        return $user->id == $blogPost->user_id;
     }
 
     /**

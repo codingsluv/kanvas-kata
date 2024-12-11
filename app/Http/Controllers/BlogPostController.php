@@ -56,17 +56,18 @@ class BlogPostController extends Controller
         ]);
     }
 
-    public function edit(BlogPost $blogPost){
+public function edit(BlogPost $blogPost){
+        Gate::authorize('update', $blogPost);
         return Inertia::render('Blog/Edit', [
             'blogPost' => $blogPost,
         ]);
     }
 
-    public function update(Request $request, BlogPost $blogPost){
+    public function update(Request $request, $id){
+        $blogPost = BlogPost::findOrFail($id);
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'image' => 'image|mimes:jpg,jpeg,png,webp|max:2048'
         ]);
 
         $blogPost->update($request->only('title', 'content'));

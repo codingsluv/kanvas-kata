@@ -82,9 +82,10 @@ const generatePeom = () => {
             type: 'warning'
         })
     }
+
     isGenerating.value = true;
 
-    router.post('/blog/create',
+    router.visit('/blog/create',
         {
             method: 'post',
             data: { prompt: content.value },
@@ -287,8 +288,8 @@ const generatePeom = () => {
             :direction="direction"
             :before-close="handleClose">
             <div class="relative mb-4">
-                <label for="message" class="leading-7 text-sm text-gray-600">Biarkan saya yang membuat tulisan 😀</label>
-                <textarea v-model="content" id="message" name="message"
+                <label for="content" class="leading-7 text-sm text-gray-600">Biarkan saya yang membuat tulisan 😀</label>
+                <textarea v-model="content" id="content" name="content"
                     class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out">
                  </textarea>
 

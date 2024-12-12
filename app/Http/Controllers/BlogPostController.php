@@ -13,7 +13,7 @@ use Inertia\Inertia;
 class BlogPostController extends Controller
 {
     public function index(){
-        $blogPosts = BlogPost::with('user')->latest()->paginate(3);
+        $blogPosts = BlogPost::with('user')->latest()->paginate(5);
         return Inertia::render('Blog/index', [
             'blogPosts' => $blogPosts,
         ]);

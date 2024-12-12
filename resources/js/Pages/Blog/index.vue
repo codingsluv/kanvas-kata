@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import Pagination from "@/Components/Pagination.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Link } from "@inertiajs/vue3";
 import moment from "moment";
@@ -10,7 +11,15 @@ interface BlogPost {
     image: string;
 }
 
-defineProps<{ blogPosts: BlogPost }>();
+defineProps<{
+    blogPosts: BlogPost
+}>();
+
+const handleCurrentChange = (val: number) => {
+    // Update the current page
+
+}
+
 </script>
 
 <template>
@@ -105,5 +114,10 @@ defineProps<{ blogPosts: BlogPost }>();
             </div>
         </section>
         <!-- End Section Content -->
+
+        <!-- Start Pagination -->
+          <div class="flex justify-center items-center">
+            <el-pagination background layout="prev, pager, next" :total="1000" :page-size="20" @current-change="handleCurrentChange"></el-pagination>
+          </div>
     </AuthenticatedLayout>
 </template>

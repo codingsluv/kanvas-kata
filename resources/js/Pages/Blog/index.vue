@@ -15,10 +15,6 @@ defineProps<{
     blogPosts: BlogPost
 }>();
 
-const handleCurrentChange = (val: number) => {
-    // Update the current page
-
-}
 
 </script>
 
@@ -116,8 +112,6 @@ const handleCurrentChange = (val: number) => {
         <!-- End Section Content -->
 
         <!-- Start Pagination -->
-          <div class="flex justify-center items-center">
-            <el-pagination background layout="prev, pager, next" :total="1000" :page-size="20" @current-change="handleCurrentChange"></el-pagination>
-          </div>
+
     </AuthenticatedLayout>
 </template>

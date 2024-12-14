@@ -44,7 +44,7 @@ class BlogPostPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, BlogPost $blogPost): bool
+    public function destroy(User $user, BlogPost $blogPost): bool
     {
         return $user->id == $blogPost->user_id;
     }

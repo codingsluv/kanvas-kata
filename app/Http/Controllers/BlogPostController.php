@@ -81,10 +81,17 @@ public function edit(BlogPost $blogPost){
     }
 
     public function destroy(BlogPost $blogPost){
-        $blogPost->delete();
-        if (Gate::denies('delete', $blogPost)) {
-            return redirect()->route('blog.index')->with('status', 'You are not authorized to delete this blog post.');
+        // Otorisasi apakah user memiliki hak untuk menghapus
+        Gate::authorize('destroy', $blogPost);
+
+    // Hapus gambar jika ada
+        if ($blogPost->image) {
+            Storage::delete('public/'.$blogPost->image);
         }
+
+    // Hapus blog post
+        $blogPost->delete();
+        return redirect()->route('blog.index')->with('status', 'Blog post deleted successfully.');
     }
 
 }

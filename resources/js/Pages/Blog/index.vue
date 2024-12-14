@@ -3,7 +3,7 @@ import Pagination from "@/Components/Pagination.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Link, router } from "@inertiajs/vue3";
 import moment from "moment";
-import { ref, watch } from "vue";
+import { Head } from '@inertiajs/vue3';
 
 interface BlogPost {
     id: number;
@@ -30,6 +30,7 @@ function handlePagination(url: string) {
 </script>
 
 <template>
+    <Head title="Blog"/>
     <AuthenticatedLayout>
         <!-- Page Heading -->
         <header class="text-gray-600 body-font">

@@ -13,9 +13,16 @@ use Inertia\Inertia;
 class BlogPostController extends Controller
 {
     public function index(){
-        $blogPosts = BlogPost::with('user')->latest()->paginate(5);
+        $blogPosts = BlogPost::with('user')->latest()->paginate(3);
         return Inertia::render('Blog/index', [
             'blogPosts' => $blogPosts,
+            'pagination' => [
+                'current_page' => $blogPosts->currentPage(),
+                'last_page' => $blogPosts->lastPage(),
+                'prev_page_url' => $blogPosts->previousPageUrl(),
+                'next_page_url' => $blogPosts->nextPageUrl(),
+            ],
+
         ]);
     }
     public function create(){

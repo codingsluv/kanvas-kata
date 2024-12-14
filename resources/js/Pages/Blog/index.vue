@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import Pagination from "@/Components/Pagination.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Link } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3";
 import moment from "moment";
+import { ref, watch } from "vue";
 
 interface BlogPost {
     id: number;
@@ -11,11 +12,21 @@ interface BlogPost {
     image: string;
 }
 
+interface PaginationData {
+  current_page: number;
+  last_page: number;
+  prev_page_url: string | null;
+  next_page_url: string | null;
+}
+
 defineProps<{
-    blogPosts: BlogPost
+  blogPosts: BlogPost[];
+  pagination: PaginationData;
 }>();
 
-
+function handlePagination(url: string) {
+  router.get(url, {}, { preserveState: true, preserveScroll: true });
+}
 </script>
 
 <template>
@@ -70,18 +81,31 @@ defineProps<{
         <section class="text-gray-600 body-font overflow-hidden">
             <div class="container px-5 py-24 mx-auto">
                 <div class="-my-8 divide-y-2 divide-gray-100">
-                    <div v-for="post in blogPosts.data" :key="post.id" class="py-8 flex flex-wrap md:flex-nowrap">
+                    <div
+                        v-for="post in blogPosts.data"
+                        :key="post.id"
+                        class="py-8 flex flex-wrap md:flex-nowrap"
+                    >
                         <div
-                            class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-                            <img :src="`/storage/${post.image}`" class="w-48 h-48 mb-2 object-cover object-center rounded-lg" alt="">
-                            <span class="font-semibold title-font text-gray-700"
-                                >{{ post.user.name }}</span>
-                            <span class="mt-1 text-gray-500 text-sm"
-                                >{{ moment(String(post.created_at)).startOf('s').from() }}</span>
+                            class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col"
+                        >
+                            <img
+                                :src="`/storage/${post.image}`"
+                                class="w-48 h-48 mb-2 object-cover object-center rounded-lg"
+                                alt=""
+                            />
+                            <span
+                                class="font-semibold title-font text-gray-700"
+                                >{{ post.user.name }}</span
+                            >
+                            <span class="mt-1 text-gray-500 text-sm">{{
+                                moment(String(post.created_at))
+                                    .startOf("s")
+                                    .from()
+                            }}</span>
                         </div>
                         <div class="md:flex-grow">
-                            <h2
-                                class="text-2xl font-medium title-font mb-2">
+                            <h2 class="text-2xl font-medium title-font mb-2">
                                 {{ post.title }}
                             </h2>
                             <p class="leading-relaxed">
@@ -112,6 +136,10 @@ defineProps<{
         <!-- End Section Content -->
 
         <!-- Start Pagination -->
-
+        <div class="py-24 px-4 mx-auto">
+            <div class="flex justify-center align-items-center">
+                <Pagination :pagination="pagination" @paginate="handlePagination"></Pagination>
+            </div>
+        </div>
     </AuthenticatedLayout>
 </template>
